@@ -1,17 +1,22 @@
 #!/bin/bash
 
-echo "Installing net-tools..."
-yum -y install net-tools
+echo "[INFO]  Installing k3s on server node (ip: $1)"
 
-echo "Installing k3s"
-systemctl disable firewalld --now
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server
-  --node-ip=192.168.42.110
-  --write-kubeconfig-mode=644" sh -
+export INSTALL_K3S_EXEC="--write-kubeconfig-mode=644 --tls-san $(hostname) --node-ip $1  --bind-address=$1 --advertise-address=$1 "
 
-mkdir -p /vagrant/token
-sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/token
+echo "[INFO]  ARGUMENT PASSED TO INSTALL_K3S_EXEC: $INSTALL_K3S_EXEC"
 
-echo "alias k='kubectl'" >> /home/vagrant/.bashrc
+apk add curl
 
-echo "[Server complete]"
+curl -sfL https://get.k3s.io |  sh -
+
+echo "[INFO]  Doing some sleep to wait for k3s to be ready"
+
+sleep 10
+
+sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/scripts/
+
+echo "[INFO]  Successfully installed k3s on server node"
+
+echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.sh # way to add alias on all users
+

@@ -1,40 +1,29 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
 Vagrant.configure("2") do |config|
-  # Образ виртуальной машины с Vagrant Cloud
-  config.vm.box = "generic/centos7"
-  config.vm.box_version = "4.2.16"
-  config.vm.box_url = "https://app.vagrantup.com/generic/boxes/centos7"
 
-  # Server
-  # Настройки виртуальной машины и выбор провайдера
-  config.vm.define "miarzumaS" do |server|
-    server.vm.hostname = "miarzumaS"
-    server.vm.network "private_network", ip: "192.168.56.110"
-    server.vm.synced_folder ".", "/vagrant", type: "virtualbox", SharedFoldersEnableSymlinksCreate: true
-    server.vm.provision "shell", path: "scripts/server.sh", privileged: true, args: "192.168.56.110"
-    server.vm.provider "virtualbox" do |vb|
-      vb.name = "miarzumaS"
-      vb.memory = "1024"
-      vb.cpus = "2"
+        config.vm.define "miarzumaS" do |miarzumaS|
+        config.vm.box = "generic/alpine311"
+            miarzumaS.vm.hostname = "miarzumaS"
+            miarzumaS.vm.synced_folder ".", "/vagrant"
+            miarzumaS.vm.network "private_network", ip: "192.168.56.110"
+            miarzumaS.vm.provision "shell", privileged: true, path: "scripts/server.sh", args: ["192.168.56.110"]
+            miarzumaS.vm.provider "virtualbox" do |vb|
+              vb.name = "miarzumaS"
+              vb.memory = "2048"
+              vb.cpus = "2"
+            end
+        end
 
-   #   vb.customize ["modifyvm", "192.168.56.110", "--natdnsproxy1", "on"]
-   #   vb.customize ["modifyvm", "192.168.56.110", "--natdnshostresolver1", "on"]
+        config.vm.define "miarzumaSW" do |miarzumaSW|
+        config.vm.box = "generic/alpine311"
+            miarzumaSW.vm.hostname = "miarzumaSW"
+            miarzumaSW.vm.synced_folder ".", "/vagrant"
+            miarzumaSW.vm.network "private_network", ip: "192.168.56.111"
+            miarzumaSW.vm.provision "shell", privileged: true, path: "scripts/sworker.sh", args:  ["192.168.56.110", "192.168.56.111"]
+            miarzumaSW.vm.provider "virtualbox" do |vb|
+              vb.name = "miarzumaSW"
+              vb.memory = "2048"
+              vb.cpus = "2"
+            end
+        end
 
     end
-  end
-
-  # SWorker
-  # Настройки виртуальной машины и выбор провайдера
-#  config.vm.define "miarzuma" do |sworker|
-#    sworker.hostname = "miarzumaSW"
-#    sworker.vm.network "private_network", ip: "192.168.56.111"
-#    sworker.vm.synced_folder "./shared", "/tmp/shared"
-#    sworker.vm.provider "virtualbox" do |vb|
-#      vb.memory = "1024"
-#      vb.cpus = "2"
-#    end
-#    sworker.vm.provision "shell", path: "scripts/sworker.sh", args: [SWORKER]
-#  end
-end

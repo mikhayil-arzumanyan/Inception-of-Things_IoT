@@ -1,10 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-sudo -i
-# If the command is not specified, and the K3S_URL is set, it will default to “agent.”
-export K3S_TOKEN_FILE=/tmp/shared/token
-export K3S_URL=https://$SWORKER:6443
-export INSTALL_K3S_EXEC="--flannel-iface=eth1"
+export NAME="emaugaleSW"
+echo "[INFO]  Installing k3s on server worker node (ip: $2)"
 
-# Тихо скачивает файл, обрабатывает HTTP-ошибки как сбои и автоматически следовает за всеми возможными перенаправлениями, которые могут произойти во время процесса загрузки.
+export TOKEN_FILE="/vagrant/scripts/node-token"
+
+echo "[INFO]  Token: $(cat $TOKEN_FILE)"
+
+export INSTALL_K3S_EXEC="agent --server https://$1:6443 --token-file $TOKEN_FILE --node-ip=$2"
+
+echo "[INFO]  ARGUMENT PASSED TO INSTALL_K3S_EXEC: $INSTALL_K3S_EXEC"
+
+apk add curl
+
 curl -sfL https://get.k3s.io | sh -
+
+echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.sh # way to add alias on all users
+
