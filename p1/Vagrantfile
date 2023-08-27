@@ -1,46 +1,40 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Генерируем ssh ключ (system() - Ruby функция)
-#system("
-#    if [ #{ARGV[0]} = 'up' ]; then
-#        ./scripts/ssh_gen.sh
-#    fi
-#")
-
-SERVER = "192.168.56.110"
-SWORKER = "192.168.56.111"
-
 Vagrant.configure("2") do |config|
   # Образ виртуальной машины с Vagrant Cloud
   config.vm.box = "generic/centos7"
-#  config.vm.box_version = "4.2.16"
-#  config.vm.box_url = "https://app.vagrantup.com/generic/boxes/centos7"
-#  config.vm.box_check_update = false
+  config.vm.box_version = "4.2.16"
+  config.vm.box_url = "https://app.vagrantup.com/generic/boxes/centos7"
 
   # Server
   # Настройки виртуальной машины и выбор провайдера
-  config.vm.define "miarzuma" do |server|
-    server.hostname = "miarzumaS"
-    server.vm.network "private_network", ip: SERVER
-    server.vm.synced_folder "./shared", "/tmp/shared"
+  config.vm.define "miarzumaS" do |server|
+    server.vm.hostname = "miarzumaS"
+    server.vm.network "private_network", ip: "192.168.56.110"
+    server.vm.synced_folder ".", "/vagrant", type: "virtualbox", SharedFoldersEnableSymlinksCreate: true
+    server.vm.provision "shell", path: "scripts/server.sh", privileged: true, args: "192.168.56.110"
     server.vm.provider "virtualbox" do |vb|
+      vb.name = "miarzumaS"
       vb.memory = "1024"
       vb.cpus = "2"
+
+   #   vb.customize ["modifyvm", "192.168.56.110", "--natdnsproxy1", "on"]
+   #   vb.customize ["modifyvm", "192.168.56.110", "--natdnshostresolver1", "on"]
+
     end
-    server.vm.provision "shell", path: "scripts/server.sh", env: {"SERVER" => SERVER}
   end
 
   # SWorker
   # Настройки виртуальной машины и выбор провайдера
-  config.vm.define "miarzuma" do |sworker|
-    sworker.hostname = "miarzumaSW"
-    sworker.vm.network "private_network", ip: SWORKER
-    sworker.vm.synced_folder "./shared", "/tmp/shared"
-    sworker.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
-      vb.cpus = "2"
-    end
-    sworker.vm.provision "shell", path: "scripts/sworker.sh", env: {"SWORKER" => SWORKER}
-  end
+#  config.vm.define "miarzuma" do |sworker|
+#    sworker.hostname = "miarzumaSW"
+#    sworker.vm.network "private_network", ip: "192.168.56.111"
+#    sworker.vm.synced_folder "./shared", "/tmp/shared"
+#    sworker.vm.provider "virtualbox" do |vb|
+#      vb.memory = "1024"
+#      vb.cpus = "2"
+#    end
+#    sworker.vm.provision "shell", path: "scripts/sworker.sh", args: [SWORKER]
+#  end
 end

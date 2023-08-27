@@ -1,21 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
-sudo su
+echo "Installing net-tools..."
+yum -y install net-tools
 
-# If K3S_URL not set, it will default to “server.”
-export K3S_KUBECONFIG_MODE="644"
-export INSTALL_K3S_EXEC="server --bind-address=$SERVER --node-external-ip=$SERVER --flannel-iface=eth1"
+echo "Installing k3s"
+systemctl disable firewalld --now
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server
+  --node-ip=192.168.42.110
+  --write-kubeconfig-mode=644" sh -
 
-# Тихо скачивает файл, обрабатывает HTTP-ошибки как сбои и автоматически следовает за всеми возможными перенаправлениями, которые могут произойти во время процесса загрузки.
-curl -sfL https://get.k3s.io | sh -
+mkdir -p /vagrant/token
+sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/token
 
-sleep 10
+echo "alias k='kubectl'" >> /home/vagrant/.bashrc
 
-# Мы указываем брандмауэру разрешить входящий TCP-трафик на порт 6443 в зоне "public", и это правило будет действовать даже после перезагрузок брандмауэра.
-firewall-cmd --zone=public --add-port=6443/tcp --permanent
-
-# Эта команда позволяет обновить брандмауэр на лету, без необходимости перезагрузки всей системы.
-firewall-cmd --reload
-
-cp /var/lib/rancher/k3s/server/token /tmp/shared/
-cp /etc/rancher/k3s/k3s.yaml /tmp/shared/
+echo "[Server complete]"
