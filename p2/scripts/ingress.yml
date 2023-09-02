@@ -1,0 +1,70 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  
+spec:
+  rules:
+    - host: "app1.com"
+      http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: app-1
+                  port:
+                    number: 80
+    - host: "app2.com"
+      http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: app-2
+                  port:
+                    number: 80
+    - host: "app3.com"
+      http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: app-3
+                  port:
+                    number: 80
+
+# For browser (change to check if all app works)
+   
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-3
+                port:
+                  number: 80
+
+# Это конфигурация входа Kubernetes. Вот разбивка того, что он делает:
+
+# apiVersion: networking.k8s.io/v1: указывает версию API Kubernetes, которую вы используете для создания этого объекта.
+
+# kind: Ingress: это означает, что вы создаете Ingress, который представляет собой объект Kubernetes, который управляет внешним доступом к службам внутри кластера, обычно HTTP.
+
+# metadata: Этот раздел содержит данные, позволяющие однозначно идентифицировать объект, в том числе name(имя Ingress).
+
+# spec: Этот раздел определяет желаемое состояние объекта.
+
+# rules: это список правил, определяющих, как должны маршрутизироваться запросы к определенному хосту (или к самому Ingress, если хост не указан).
+
+# Итак, вкратце, этот Ingress будет маршрутизировать трафик HTTP(S) следующим образом:
+
+# Запросы app1.comбудут перенаправляться в app-1Службу через порт 80.
+# Запросы app2.comбудут перенаправляться в app-2Службу через порт 80.
+# Запросы app3.comбудут перенаправляться в app-3Службу через порт 80.
+# Если в запросе не указан хост (т. е. если запрос сделан непосредственно на IP-адрес Ingress), запрос будет перенаправлен в Сервис app-3через порт 80.
+
+# Это позволяет вам предоставлять доступ к нескольким службам в разных доменах (или по разным путям одного и того же домена), используя один IP-адрес.
