@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kibotrel/kibotrel-iot-part-3
+    repoURL: https://github.com/mikhayil-arzumanyan/Inception-of-Things_IoT/tree/master/p3
     targetRevision: HEAD
     path: app
   destination:
@@ -21,7 +21,7 @@ spec:
 
 ---
 
-# Предоставленная вами конфигурация YAML предназначена для приложения Argo CD. Argo CD — это декларативный инструмент непрерывной доставки GitOps для Kubernetes, который помогает автоматизировать развертывание приложений и управление ими в кластере Kubernetes. Вот разбивка конфигурации:
+# Предоставленная конфигурация YAML предназначена для приложения Argo CD. Argo CD — это декларативный инструмент непрерывной доставки GitOps для Kubernetes, который помогает автоматизировать развертывание приложений и управление ими в кластере Kubernetes. Вот разбивка конфигурации:
 
 # apiVersion и kind: эти поля определяют тип создаваемого вами ресурса Kubernetes, который является приложением Argo CD.
 
@@ -33,7 +33,7 @@ spec:
 
 # source: Описывает, где находится исходный код приложения.
 
-# repoURL: указывает URL-адрес репозитория Git, из которого будет получено приложение. В данном случае это « https://github.com/kibotrel/kibotrel-iot-part-3 ».
+# repoURL: указывает URL-адрес репозитория Git, из которого будет получено приложение. В данном случае это « https://github.com/mikhayil-arzumanyan/Inception-of-Things_IoT/tree/master/p3 ».
 
 # targetRevision: определяет используемую ветку или версию Git. Для него установлено значение «HEAD», что указывает на последнюю фиксацию в репозитории.
 
