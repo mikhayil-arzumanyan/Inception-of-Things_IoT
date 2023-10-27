@@ -1,11 +1,12 @@
 #!/bin/bash
 
 export NAME="miarzumaSW"
+
 echo "DOING -->  Installing k3s on server worker node (ip: $2)"
 
 export TOKEN_FILE="/vagrant/scripts/node-token"
 
-"DOING -->  Token: $(cat $TOKEN_FILE)"
+echo "DOING -->  Token: $(cat $TOKEN_FILE)"
 
 export INSTALL_K3S_EXEC="agent --server https://$1:6443 --token-file $TOKEN_FILE --node-ip=$2"
 
