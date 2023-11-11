@@ -1,0 +1,23 @@
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wil-playground
+  namespace: argocd
+spec:
+  destination:
+    namespace: dev
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/mikhayil-arzumanyan/IoT-test-for-Inception-of-Things_IoT.git
+    targetRevision: HEAD
+    path: manifests
+  syncPolicy:
+    automated:  #make it sync with git
+      prune: true  #to remove any manual change made.
+      selfHeal: true  #to remove pod if it's not used anymore.
+
+---
+
