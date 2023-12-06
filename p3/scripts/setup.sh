@@ -52,13 +52,6 @@ echo "Password = (go to argo_pass.txt file)"
 #Create the app in argocd
 kubectl apply -f ../confs/app.yaml -n argocd
 
-#Create Argo CD App
-argocd app create wil-playground \
-       --repo https://github.com/mikhayil-arzumanyan/IoT-test-for-Inception-of-Things_IoT \
-       --path manifests \
-       --dest-server https://kubernetes.default.svc \
-       --dest-namespace dew222222222222222222222
-
 #Argocd-server for browser
 kubectl port-forward service/argocd-server -n argocd 8080:443
 
