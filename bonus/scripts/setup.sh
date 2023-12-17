@@ -28,9 +28,18 @@ curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 #Create k3d clutser with port forwarding
 k3d cluster create -p "8880:443@loadbalancer" -p "8888:8888@loadbalancer"
 
+# installing gitlab
+sudo apt-get install -y curl openssh-server ca-certificates tzdata perl
+curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+sudo EXTERNAL_URL="https://gitlab.vahe.home" apt-get install gitlab-ce
+sleep 5
+echo "Username = root"
+echo "Password = (go to /etc/gitlab/initial_root_password)"
+
 #Create namespaces:
 kubectl create ns argocd
 kubectl create ns dev
+kubectl create ns gitlab
 
 #Setting up Argo CD
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -50,6 +59,9 @@ echo "Password = (go to argo_pass.txt file)"
 #Create the app in argocd
 kubectl apply -f ../confs/app.yaml -n argocd
 
+#Deploy gitlab
+kubectl apply -n gitlab -f ./config/deploy.yaml
+
 #Argocd-server for browser
-kubectl port-forward service/argocd-server -n argocd 8080:443
+kubectl port-forward service/argocd-server -n argocd 8880:443
 
