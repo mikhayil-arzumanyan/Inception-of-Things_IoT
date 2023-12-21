@@ -18,10 +18,10 @@ echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.sh
 
 sleep 10
 
-kubectl apply -f /vagrant/scripts/app1.yml; sleep 2
+kubectl apply -f /vagrant/confs/app1.yml; sleep 2
 
-kubectl apply -f /vagrant/scripts/app2.yml; sleep 2
+kubectl apply -f /vagrant/confs/app2.yml; sleep 2
 
-kubectl apply -f /vagrant/scripts/app3.yml; sleep 2
+kubectl apply -f /vagrant/confs/app3.yml; sleep 2
 
-kubectl apply -f /vagrant/scripts/ingress.yml; sleep 2
+kubectl apply -f /vagrant/confs/ingress.yml; sleep 2
