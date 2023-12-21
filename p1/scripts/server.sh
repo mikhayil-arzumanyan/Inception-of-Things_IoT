@@ -14,7 +14,7 @@ echo "DOING -->  Doing some sleep to wait for k3s to be ready"
 
 sleep 10
 
-sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/scripts/
+sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/confs/
 
 echo "DOING -->  Successfully installed k3s on server node"
 

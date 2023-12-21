@@ -4,7 +4,7 @@ export NAME="miarzumaSW"
 
 echo "DOING -->  Installing k3s on server worker node (ip: $2)"
 
-export TOKEN_FILE="/vagrant/scripts/node-token"
+export TOKEN_FILE="/vagrant/confs/node-token"
 
 echo "DOING -->  Token: $(cat $TOKEN_FILE)"
 
