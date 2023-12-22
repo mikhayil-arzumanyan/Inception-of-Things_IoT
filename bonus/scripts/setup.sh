@@ -60,7 +60,7 @@ echo "Password = (go to /p3/scripts/argo_pass.txt file)"
 kubectl apply -f ../confs/app.yaml -n argocd
 
 #Deploy gitlab
-kubectl apply -n gitlab -f ./config/deploy.yaml
+kubectl apply -n gitlab -f ../confs/deploy.yaml
 
 #Argocd-server for browser
 kubectl port-forward service/argocd-server -n argocd 8880:443
