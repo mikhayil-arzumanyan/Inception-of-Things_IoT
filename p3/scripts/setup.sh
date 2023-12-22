@@ -51,5 +51,5 @@ echo "Password = (go to /p3/scripts/argo_pass.txt file)"
 kubectl apply -f ../confs/app.yaml -n argocd
 
 #Argocd-server for browser
-kubectl port-forward service/argocd-server -n argocd 8080:443
+kubectl port-forward service/argocd-server -n argocd 8880:443
 
