@@ -51,3 +51,23 @@ spec:
             - containerPort: 22
 
 ---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitlab-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: gitlab
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://gitlab.vahe.home/root/iot-test-for-inception-of-things_iot.git 
+    targetRevision: HEAD
+    path: manifests
+  syncPolicy:
+    automated:  #make it sync with git
+      prune: true  #to remove any manual change made.
+      selfHeal: true  #to remove pod if it's not used anymore.
+
