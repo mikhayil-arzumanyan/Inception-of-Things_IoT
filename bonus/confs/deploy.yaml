@@ -43,7 +43,6 @@ spec:
     spec:
       containers:
         - name: gitlab
-         #image: https://gitlab.vahe.home/admin/projects/root/iot-test-for-inception-of-things_iot
           image: gitlab/gitlab-ce:11.10.4-ce.0
           ports:
             - containerPort: 443
