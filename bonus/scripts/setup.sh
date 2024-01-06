@@ -31,7 +31,7 @@ k3d cluster create -p "8880:443@loadbalancer" -p "8888:8888@loadbalancer"
 # installing gitlab
 sudo apt-get install -y curl openssh-server ca-certificates tzdata perl
 curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
-sudo EXTERNAL_URL="https://gitlab.vahe.home" apt-get install gitlab-ce
+sudo EXTERNAL_URL="https://gitlab.vahe.home" apt-get install gitlab-ce -y
 sleep 5
 echo "Username = root"
 echo "Password = (go to /etc/gitlab/initial_root_password)"
@@ -58,6 +58,7 @@ echo "Password = (go to /p3/scripts/argo_pass.txt file)"
 
 #Create the app in argocd
 kubectl apply -f ../confs/app.yaml -n argocd
+kubectl apply -f ../confs/app2.yaml -n argocd
 
 #Deploy gitlab
 kubectl apply -n gitlab -f ../confs/deploy.yaml
