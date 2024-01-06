@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: https://gitlab.vahe.home/root/iot-test-for-inception-of-things_iot.git
+    repoURL: https://gitlab.vahe.home/root/miarzuma-inception-of-things_iot.git
     path: manifests
     targetRevision: HEAD
     path: manifests
