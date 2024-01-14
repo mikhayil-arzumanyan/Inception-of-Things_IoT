@@ -31,7 +31,7 @@ k3d cluster create -p "8880:443@loadbalancer" -p "8888:8888@loadbalancer"
 # installing gitlab
 sudo apt-get install -y curl openssh-server ca-certificates tzdata perl
 curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
-sudo EXTERNAL_URL="https://gitlab.vahe.home" apt-get install gitlab-ce -y
+sudo EXTERNAL_URL="https://gitlab.iot.am" apt-get install gitlab-ce -y
 sleep 5
 echo "Username = root"
 echo "Password = (go to /etc/gitlab/initial_root_password)"
