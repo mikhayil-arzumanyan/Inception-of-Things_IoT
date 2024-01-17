@@ -12,9 +12,8 @@ spec:
   project: default
   source:
     repoURL: https://gitlab.com/miarzuma/miarzuma-Inception-of-Things_IoT.git
-    path: manifests
+    path:  gitlab-app-manifests
     targetRevision: HEAD
-    path: manifests
   syncPolicy:
     automated:  #make it sync with git
       prune: true  #to remove any manual change made.
