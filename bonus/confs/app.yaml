@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: https://github.com/mikhayil-arzumanyan/miarzuma-Inception-of-Things_IoT.git
     targetRevision: HEAD
-    path: wil-playground-manifests
+    path: manifests
   syncPolicy:
     automated:  #make it sync with git
       prune: true  #to remove any manual change made.
