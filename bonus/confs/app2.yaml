@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: https://gitlab.com/miarzuma/miarzuma-Inception-of-Things_IoT.git
+    repoURL: https://gitlab.iot.am/miarzuma/miarzuma-inception-of-things_iot.git
     path:  manifests
     targetRevision: HEAD
   syncPolicy:
